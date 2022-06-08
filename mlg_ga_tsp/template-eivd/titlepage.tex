@@ -1,0 +1,70 @@
+\startsetups[titlepage]
+
+\startalignment[center]
+\setupinterlinespace[line=.75cm]
+{\tfc{\sc Haute Ecole d'Ingénierie et de Gestion }}\\
+{\tfc{\sc du Canton de Vaud}}\\
+\blank[2*halfline]
+{\tfb{\sc \getvariable{titlepage}{subtitle}}}\\
+{\tfa{\sc \getvariable{titlepage}{subject}}}\\
+\getvariable{titlepage}{authors}
+{\tfa\getvariable{titlepage}{date}}
+\setupinterlinespace
+\stopalignment
+
+% \startpagemakeup
+
+% \midaligned{\externalfigure[HEIG-VD_logotype-baseline_rouge-rvb.svg][maxwidth=0.6\textwidth][heig-title]}
+
+% \blank[5*halfline]
+% \setupinterlinespace[line=.75cm]
+% \midaligned{{\tfc{\sc Haute Ecole d'Ingénierie et de Gestion }}\\
+%             {\tfc{\sc du Canton de Vaud}}
+%            }
+
+% \blank[3*halfline]
+% {\setupinterlinespace[line=.75cm]
+%  \midaligned{{\tfb{\sc \getvariable{titlepage}{subtitle}}}}\\
+%  \midaligned{{\tfa{\sc \getvariable{titlepage}{subject}}}}
+% }
+
+% \blank[3*halfline]
+% \midaligned{\setupinterlinespace[line=0.75cm]
+%             \startframed[
+%               frame=off,
+%               bottomframe=on,
+%               topframe=on,
+%               framecolor=black,
+%               frameoffset=0.4cm,
+%               rulethickness=.05cm,
+%               width=0.8\textwidth]
+%             {\tfc{\sc {\bf \getvariable{titlepage}{title}}}}
+%             \setupinterlinespace[line=0.75cm]
+%             \stopframed
+%            }
+
+% \blank[6*halfline]
+% \midaligned{\tfa\starttabulate[|l|w (.3\textwidth)|l|]
+%             \NC{\emph{Auteurs}:}
+%             \NC{}
+%             \NC{\emph{Responsables}:}
+%             \NR{}
+%             \NC\framed[frame=off, align=normal, location=top]
+%                 {\setupinterlinespace[line=0.75cm]
+%                  \getvariable{titlepage}{authors}
+%                 }
+%             \NC{}
+%             \NC\framed[frame=off, align=normal, location=top]
+%                 {\setupinterlinespace[line=0.75cm]
+%                  \getvariable{titlepage}{supervisors}
+%                 }
+%             \NR{}
+%             \stoptabulate
+%            }
+
+% \blank[3*halfline]
+% \setupinterlinespace[line=2cm]
+% \midaligned{\tfa\getvariable{titlepage}{date}}
+
+% \stoppagemakeup
+\stopsetups

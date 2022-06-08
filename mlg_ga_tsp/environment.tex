@@ -1,0 +1,70 @@
+% Directory where images may be found
+\setupexternalfigures[directory={images}]
+
+\setuplanguage[fr]
+\mainlanguage[fr]
+\language[fr]
+
+\input ../tools/pandoc-xhtml/pandoc-xhtml.tex
+\input ../cs-report.tex
+\input ./template-eivd/format.tex
+\input ./template-eivd/titlepage.tex
+
+\starttypescript [myfonts]
+  \definetypeface [myfonts] [rm] [serif] [dejavu]    [default]
+  \definetypeface [myfonts] [tt] [mono]  [dejavu]    [default] [rscale=0.75]
+  \definetypeface [myfonts] [mm] [math]  [modern]    [default]
+  \definetypeface [myfonts] [ss] [sans]  [dejavu]    [default]
+\stoptypescript
+
+\usetypescript[myfonts]
+\setupbodyfont[myfonts,11pt]
+
+\startsetups[supervisors]
+  Andres Perez-Uribe\\
+  Hector Satizabal\\
+  Yasaman Izadmehr
+\stopsetups
+
+\startsetups[subject]
+  Machine Learning
+\stopsetups
+
+\startxmlsetups example-customizations
+  \xmlsetsetup{\xmldocument}
+    {header}
+    {xml:titlepage}
+  \xmlsetsetup{\xmldocument}
+    {matrix}
+    {xml:*}
+\stopxmlsetups
+\xmlregistersetup{example-customizations}
+
+\startxmlsetups xml:titlepage
+  \setvariables[titlepage]
+    [title={\xmltext{#1}{h1[@class='title']}},
+     subtitle={\xmltext{#1}{p[@class='subtitle']}},
+     subject={\setups{subject}},
+     authors={\xmlconcat{#1}{p[@class='author']}{//}},
+     supervisors={\setups{supervisors}},
+     date={\xmltext{#1}{p[@class='date']}},
+    ]
+  % Topic extracted from the information in the header
+  \startsetups[topic]
+    \framed[frame=off, align=normal, location=top]
+      {\xmltext{#1}{h1[@class='title']}}
+  \stopsetups
+  % Authors extracted from the information in the header
+  \startsetups[authors]
+    \framed[frame=off, align=normal, location=top]
+      {\xmlconcat{#1}{p[@class='author']}{\\}}
+  \stopsetups
+\setup[titlepage]
+\stopxmlsetups
+
+\startxmlsetups xml:matrix
+\startformula \startmatrix[align={right, right},left={\left(},right={\right)}]
+\xmlflushcontext{#1}
+\stopmatrix
+\stopformula
+\stopxmlsetups

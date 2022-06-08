@@ -1,0 +1,306 @@
+%%% Custom pandoc-xhtml overrides
+\startxmlsetups xml:computer-science-report
+  %%% Disable header section. Not used for this document.
+  \xmlsetsetup{\xmldocument}
+    {table|thead|tbody|tr|th|td}
+    {xml:*}
+  \xmlsetsetup{\xmldocument}
+    {header|ol/li[@role='doc-endnote']}
+    {}
+  %%% Simpler level1 headings
+  \xmlsetsetup{\xmldocument}
+    {h1}
+    {xml:intro}
+  \xmlsetsetup{\xmldocument}
+    {h2}
+    {xml:h2}
+  \xmlsetsetup{\xmldocument}
+    {h3}
+    {xml:h3}
+  \xmlsetsetup{\xmldocument}
+    {figure}
+    {xml:figure}
+  \xmlsetsetup{\xmldocument}
+    {img}
+    {xml:img}
+  \xmlsetsetup{\xmldocument}
+    {nav[@role='doc-toc']}
+    {xml:toc}
+  \xmlsetsetup{\xmldocument}
+    {div[@class="columns"]}
+    {xml:columns}
+  \xmlsetsetup{\xmldocument}
+    {u}
+    {xml:underline}
+  \xmlsetsetup{\xmldocument}
+    {del}
+    {xml:strikethrough}
+  \xmlsetsetup{\xmldocument}
+    {pre/code}
+    {xml:code}
+  \xmlsetsetup{\xmldocument}
+    {pre[contains(@data-fromfile,'yes')]}
+    {xml:filecode}
+  \xmlsetsetup{\xmldocument}
+    {!pre/code}
+    {xml:inlinecode}
+  \xmlsetsetup{\xmldocument}
+    {jap}
+    {xml:jap}
+  \xmlsetsetup{\xmldocument}
+    {page}
+    {xml:pagebreak}
+  \xmlsetsetup{\xmldocument}
+    {a[@class='footnote-ref']}
+    {xml:footnote:ref}
+  \xmlsetsetup{\xmldocument}
+    {table}
+    {xml:table}
+  \xmlsetsetup{\xmldocument}
+    {thead}
+    {xml:table:head}
+  \xmlsetsetup{\xmldocument}
+    {tbody}
+    {xml:table:body}
+  \xmlsetsetup{\xmldocument}
+    {tr}
+    {xml:table:row}
+  \xmlsetsetup{\xmldocument}
+    {th|td}
+    {xml:table:cell}
+  % FIXME: The following rules seem to be unused
+  \xmlsetsetup{\xmldocument}
+    {sup}
+    {xml:sup}
+  \xmlsetsetup{\xmldocument}
+    {a[@class='footnote-back']}
+    {}
+  \xmlsetsetup{\xmldocument}
+    {div[@class='footnotes']}
+    {xml:footnotes}
+  \xmlsetsetup{\xmldocument}
+    {mi}
+    {xml:mathinline}
+  \xmlsetsetup{\xmldocument}
+    {md}
+    {xml:mathdisplay}
+\stopxmlsetups
+
+\xmlregistersetup{xml:computer-science-report}
+
+\definehead[intro][chapter]
+\setuphead[intro][number=no,page=no,incrementnumber=list]
+\definecombinedlist[content][intro,chapter,section]
+
+%%% Compact sections: Some sections may be too small to justify a pagebreak,
+%%% if a section is marked with nopagebreak, skip the newpage.
+\startxmlsetups xml:intro
+  \xmldoif{#1}{//h1[contains(@class,'break')]}
+    {\page} % request a pagebreak
+  \intro[\xmlattribute{#1}{..//div}{id}]{\xmlflush{#1}}
+\stopxmlsetups
+
+\startxmlsetups xml:h2
+  \xmldoif{#1}{//h2[contains(@class,'break')]}
+    {\page}
+  \section[\xmlattribute{#1}{..//div}{id}]{\xmlflush{#1}}
+\stopxmlsetups
+
+\startxmlsetups xml:h3
+  \xmldoif{#1}{//h3[contains(@class,'break')]}
+    {\page}
+  \subsection[\xmlattribute{#1}{..//div}{id}]{\xmlflush{#1}}
+\stopxmlsetups
+
+\startxmlsetups xml:ul
+  \startitemize[1, packed, broad, joinedup, nowhite, after]
+    \xmlflush{#1}
+  \stopitemize
+\stopxmlsetups
+
+\startxmlsetups xml:figure
+  \placefigure
+    {\xmlfirst{#1}{/figcaption}}
+    {\xmlfirst{#1}{/img}}
+\stopxmlsetups
+
+\startxmlsetups xml:img
+  \externalfigure[\xmlatt{#1}{src}][width=\xmlatt{#1}{width}\textwidth][factor=fit]
+\stopxmlsetups
+
+\startxmlsetups xml:toc
+  \completecontent[]
+  \page[makeup]
+\stopxmlsetups
+
+% To use it, just add :::{.columns number="x"} in your document where :
+% - x is the number of columns you want
+% - use a minimum amount of 3 ':' before the div class columns and close the
+%   part where you want your columns with the same number of ':'
+\startxmlsetups xml:columns
+  \startcolumns[n=\xmlatt{#1}{data-number}]
+  	\xmlflush{#1}
+  \stopcolumns
+\stopxmlsetups
+
+\startxmlsetups xml:underline
+  \underbar{\xmlflush{#1}}
+\stopxmlsetups
+
+\startxmlsetups xml:strikethrough
+  \overstrike{\xmlflush{#1}}
+\stopxmlsetups
+
+\startxmlsetups xml:code
+  \definevimtyping[CODE][syntax=\xmlchainatt{#1}{class}]
+  \pushcatcodetable
+  \setcatcodetable\ctxcatcodes
+  \xmlfunction{#1}{processCODE}
+  \popcatcodetable
+\stopxmlsetups
+
+\startxmlsetups xml:filecode
+  \definevimtyping[CODE][syntax=\xmlchainatt{#1}{class}]
+  \typeCODEfile{\xmlchainatt{#1}{data-file}}
+\stopxmlsetups
+
+\startxmlsetups xml:inlinecode
+  \pushcatcodetable
+  \setcatcodetable\ctxcatcodes
+  \xmlfunction{#1}{processINLINECODE}
+  \popcatcodetable
+\stopxmlsetups
+
+\startxmlsetups xml:jap
+  \usetypescriptfile[osx]
+  \usebodyfont[hiragino-kaku,12pt]
+  \setscript[nihongo]
+  \xmltext{#1}{jap}
+\stopxmlsetups
+
+\startxmlsetups xml:pagebreak
+  \page[yes,reset]
+\stopxmlsetups
+
+\startnotmode[nofootnotes]
+\startxmlsetups xml:footnote:ref
+  \xmlfilter{main}{section[@class='footnotes']/ol/li[@id=idstring('\xmlatt{#1}{href}')]/command(xml:footnote:set)}
+\stopxmlsetups
+\stopnotmode
+
+\startxmlsetups xml:table
+  \startembeddedxtable[option=stretch]
+    \xmlflush{#1}
+  \stopembeddedxtable
+\stopxmlsetups
+
+\startxmlsetups xml:table:head
+  \startxtablehead
+    \xmlflush{#1}
+  \stopxtablehead
+\stopxmlsetups
+
+\startxmlsetups xml:table:body
+  \startxtablebody
+    \xmlflush{#1}
+  \stopxtablebody
+\stopxmlsetups
+
+\startxmlsetups xml:table:row
+  \startxrow
+    \xmlflush{#1}
+  \stopxrow
+\stopxmlsetups
+
+\startxmlsetups xml:table:cell
+  \xmldoifelse{#1}{//(th|td)[@style='text-align: left;']}
+  {\startxcell[align={flushleft,lohi}]}
+  {\xmldoifelse{#1}{//(th|td)[@style='text-align: center;']}
+    {\startxcell[align={middle,lohi}]}
+    {\startxcell[align={flushright,lohi}]}}
+    \xmlflush{#1}
+  \stopxcell
+\stopxmlsetups
+
+\startxmlsetups xml:mathinline
+  \xmlfunction{#1}{processINLINEMATH}
+\stopxmlsetups
+
+\startxmlsetups xml:mathdisplay
+  \startformula
+    \xmlfunction{#1}{processDISPLAYMATH}
+  \stopformula
+\stopxmlsetups
+
+\usemodule[vim]
+\setupvimtyping[vimcommand=nvim]
+\definevimtyping[CODE]
+  [after={\stopframedcode},
+   before={\startframedcode},
+   directory=vimoutput/,
+   highlightcolor=lightgreen,
+   lines=split,
+   numbering=yes,
+   numberstep=5,
+   syntax=text,
+   tab=4,
+  ]
+
+\startluacode
+    function xml.functions.processCODE(t)
+        buffers.assign("typesetcode",
+        "\\startCODE[highlight={" ..
+          tostring(xml.attribute(t,"..[tag()='pre'","data-lines"))
+              .. "}]\n" .. tostring(xml.text(t)) .. "\n\\stopCODE")
+        context.getbuffer { "typesetcode" }
+    end
+
+    function xml.functions.processINLINECODE(t)
+        buffers.assign("inlinecode","\\type{" .. tostring(xml.text(t)) .. "}")
+        context.getbuffer { "inlinecode" }
+    end
+    
+    function stobs(t)
+      text = tostring(xml.text(t))
+      text = string.gsub(text, "/", "\\")
+      return text
+    end
+    
+    function xml.functions.processINLINEMATH(t)
+      context.m(stobs(t))
+    end
+    
+    function xml.functions.processDISPLAYMATH(t)
+      context(stobs(t))
+    end
+\stopluacode
+
+\definecolor[lightgray][x=F3F3F3]
+\definetextbackground[framedcode]
+  [framecolor=black,
+   background=color,
+   backgroundcolor=lightgray,
+   strut=yes,
+   offset=2mm,
+   width=\textwidth,
+   location=paragraph,
+   align=right]
+
+\definecolor[myblue][h=62BFFF]
+\definecolor[mygray][h=F0F0F0]
+\definebackground[blockquote]
+  [
+    framecolor=myblue,
+    background=color,
+    backgroundcolor=mygray,
+    frame=off,
+    leftframe=on,
+    rulethickness=0.3em,
+    offset=overlay,
+    leftoffset=2em,
+    rightoffset=1em,
+    width=\textwidth,
+    setups=framedsetups,
+    before=\blank,
+    after=\blank,
+  ]

@@ -1,0 +1,84 @@
+\setuppapersize[A4][A4]
+\setupwhitespace[medium]
+
+\setuplayout[
+                   width=middle,
+                  height=middle,
+                location=middle,
+                topspace=0.55in,
+             bottomspace=0.55in,
+                  bottom=0.25in,
+               backspace=1in,
+                cutspace=1in,
+              leftmargin=.45in,
+             rightmargin=.45in,
+      leftmargindistance=0.05in,
+     rightmargindistance=0.05in,
+                  header=0.30in,
+                  footer=0.30in,
+          headerdistance=0.35in,
+          footerdistance=0.35in,
+        ]
+
+\setupheader[text]
+  [before={\startframed[frame=off,bottomframe=on,framecolor=black,]},
+   after={\stopframed},
+  ]
+
+\startsetups[logo-heig-vd]
+  \externalfigure[HEIG-VD-logo.svg][width=0.1\textwidth]
+\stopsetups
+
+\startsetups[logo-hes-so]
+  \externalfigure[HES-SO-logo.jpg][width=0.13\textwidth]
+\stopsetups
+
+\setupheadertexts[]
+\setupheadertexts[\setups{logo-heig-vd}][\setups{logo-hes-so}]
+
+\setupfootertexts[pagenumber]
+\setupfootertexts[\setups{topic}][\setups{authors}]
+
+\defineenumeration[remark]
+  [alternative=top,
+   text=Remarque,
+   inbetween={\blank[none]},
+   after=\blank]
+
+\defineconversionset[bodypart:section] [n,Word] [n]
+\defineconversionset[appendix:section] [n,A] [n]
+
+\setupheads[expansion=yes,
+            sectionconversionset=section,
+           ]
+
+\setuplabeltext[fr]
+  [chapter=Chapitre,
+   appendix=Annexe
+  ]
+
+\defineitemgroup[domain]
+\setupitemgroup[domain][each][1, packed, broad, joinedup, nowhite, after]
+
+\setuphead[intro][incrementnumber=list]
+\setuplist[content][alternative=c]
+\setuplist[intro][headnumber=no]
+
+\definecolor[myblue][h=62BFFF]
+\definecolor[mygray][h=F0F0F0]
+\definebackground[blockquote]
+  [
+    framecolor=myblue,
+    background=color,
+    backgroundcolor=mygray,
+    frame=off,
+    leftframe=on,
+    rulethickness=0.3em,
+    offset=overlay,
+    leftoffset=2em,
+    rightoffset=1em,
+    width=\textwidth,
+    setups=framedsetups,
+    before=\blank,
+    after=\blank,
+  ]
