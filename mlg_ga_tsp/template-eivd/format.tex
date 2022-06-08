@@ -34,10 +34,10 @@
 \stopsetups
 
 \setupheadertexts[]
-\setupheadertexts[\setups{logo-heig-vd}][\setups{logo-hes-so}]
+\setupheadertexts[\setups{logo-heig-vd}][\getvariable{titlepage}{subject}]
 
 \setupfootertexts[pagenumber]
-\setupfootertexts[\setups{topic}][\setups{authors}]
+% \setupfootertexts[\setups{topic}][\setups{authors}]
 
 \defineenumeration[remark]
   [alternative=top,
