@@ -82,6 +82,21 @@ exemple: `[4, 2, 8, 9, 5, 1, 3, 7, 6, 0, 10, 11, 12, 13]`.
 
 # 6.6 Graphiques et explications
 
+Dans le graphe suivant, nous pouvons voir que la distance minimale est trouvée à
+partir de la ~99ème génération.
+
+<figure>
+<img src="tsp2.png" width="0.6"/>
+<figcaption aria-hidden="true">Évolution de la fonction fitness par rapport aux générations.</figcaption>
+</figure>
+
+Ainsi nous avons pu déterminer que le chemin optimal à parcourir est celui-ci.
+
+<figure>
+<img src="tsp_best.png" width="0.6"/>
+<figcaption aria-hidden="true">Chemin optimal trouvé par notre algorithme génétique.</figcaption>
+</figure>
+
 <page/>
 
 # 6.7 Conclusion
