@@ -67,17 +67,18 @@ exemple: `[4, 2, 8, 9, 5, 1, 3, 7, 6, 0, 10, 11, 12, 13]`.
 
 # 6.5 Configuration de l'algorithme génétique
 
-Paramètre        Configuration
---------------   --------------
-Mutator          `G1DListMutatorSwap` qui va changer la position de deux villes dans le chromosome.
-Crossover        `G1DListCrossoverEdge` pour avoir une séquence génétique non répétitive, particulièrement utilisé pour le TSP.
-Initializator    Nous avons utilisé celui de l'exemple de l'exercice du TSP dans pyevolve, qui permet d'éviter les répétitions lors de l'initialisation des chromosomes.
-Population size  Nous avons testé avec 100, puis nous l'avons augmenté pour constater que ça avait un impact négatif sur le résultat, puis nous voulions voir jusqu'où on pouvait descendre et 80 nous permettait, après quelques exécutions, de trouver notre meilleur résultat.
-Selection        `GTournamentSelector` qui va sélectionner des chromosomes au hasard parmi la population et le gagnant de chaque tournoi pourra être reproduit.
-Mutation rate    Nous avons testé avec des valeurs allant de 1% à 5% et nous sommes parvenu à de meilleur résultat avec 1%.
-Crossover rate   Avec 100%, nous obtenions de bons résultats lors des différents tests.
-Minimax          Toujours basé sur l'exercice, ceci permet de minimiser la fonction d'évaluation.
-Generations      Nous avons testé avec des valeurs en 2000 et 100 pour parvenir avec un bon résultat avec 300.
+
+|     Paramètre       |  Configuration                                                                |
+|---------------------|-----------------                                                              |
+|    Mutator          | Qui va changer la position de deux villes dans le chromosome                     |
+|    Crossover        | pour avoir une séquence génétique non répétitive, particulièrement utilisé pour le TSP.                                |
+|    Initializator    |  Nous avons utilisé celui de l'exemple de l'exercice du TSP dans pyevolve, qui permet d'éviter les répétitions lors de l'initialisation des chromosomes.|
+|    Population size  | Nous avons testé avec 100, puis nous l'avons augmenté pour constater que ça avait un impact négatif sur le résultat, puis nous voulions voir jusqu'où on pouvait descendre et 80 nous permettait, après quelques exécutions, de trouver notre meilleur résultat.|
+|    Selection        | `GTournamentSelector` qui va sélectionner des chromosomes au hasard parmi la population et le gagnant de chaque tournoi pourra être reproduit.|
+|    Mutation rate    | Nous avons testé avec des valeurs allant de 1% à 5% et nous sommes parvenu à de meilleur résultat avec 1%. |
+|    Crossover rate   | Avec 100%, nous obtenions de bons résultats lors des différents tests.                                                                              |
+|    Minimax          |Toujours basé sur l'exercice, ceci permet de minimiser la fonction d'évaluation. |
+|    Generations      |Nous avons testé avec des valeurs en 2000 et 100 pour parvenir avec un bon résultat avec 300. |
 
 # 6.6 Graphiques et explications
 
